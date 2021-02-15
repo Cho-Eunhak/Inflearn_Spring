@@ -2,7 +2,6 @@ package hello.hellospring.repository;
 
 import hello.hellospring.domain.Member;
 
-import javax.swing.text.html.Option;
 import java.util.*;
 
 public class MemoryMemberRepository implements MemberRepository{
@@ -36,5 +35,9 @@ public class MemoryMemberRepository implements MemberRepository{
         return new ArrayList<>(store.values());
 
         //검증 어캐할까??테스트케이스작성!!
+    }
+
+    public void clearStore(){
+        store.clear();
     }
 }
