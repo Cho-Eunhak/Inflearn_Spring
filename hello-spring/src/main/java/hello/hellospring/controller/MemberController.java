@@ -1,8 +1,14 @@
 package hello.hellospring.controller;
 
+import hello.hellospring.domain.Member;
 import hello.hellospring.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller//스프링이 controller annotaion을 보고 관리된다-->빈이 관리된다라고 함
 public class MemberController {
@@ -26,6 +32,28 @@ public class MemberController {
     @Autowired//스프링 컨테이너와의 연결,생성자를 통한 방법
     public MemberController(MemberService memberService) {//이렇게 하면 memberservice를 못찾는 오류가 발생함
         this.memberService = memberService;//멤버서비스는 순수한 자바 클래스기때문에.
+    }
+
+    @GetMapping("/members/new")
+    public String createForm(){
+        return "members/createMemberForm";
+    }
+
+    @PostMapping("/members/new")//데이터를 전달할때쓴다
+    public String create(MemberForm form) {
+        Member member = new Member();
+        member.setName(form.getName());
+
+        memberService.join(member);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/members")
+    public String list(Model model){
+        List<Member> members = memberService.findMember();
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 
 
