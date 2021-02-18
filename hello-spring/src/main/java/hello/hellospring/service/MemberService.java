@@ -4,12 +4,14 @@ import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 //서비스 클래스는 좀더 비즈니스에 가깝다,,용어를 좀더 비즈니스적으로써야함
 //@Service//스프링에 인식시킴
+@Transactional//jpa는 이게있어야함
 public class MemberService {
     private final MemberRepository memberRepository;
     //@Autowired
