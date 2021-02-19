@@ -23,10 +23,23 @@ public class MemberService {
     //회원가입
     public Long join(Member member){
 
-        //같은 이름 중복회원 안됨
-        validateDuplicateMember(member);//중복회원검증
-        memberRepository.save(member);
-        return member.getId();
+        //AOP는 공통관심사항과 핵심관심사항으로 나눌수있따
+        //공통은 cross cutting,, 핵심은 core
+
+        //원하는 곳에 공통관심사항을 적용한다-->AOP
+        long start = System.currentTimeMillis();
+
+        try {
+            //같은 이름 중복회원 안됨
+            validateDuplicateMember(member);//중복회원검증
+            memberRepository.save(member);
+            return member.getId();
+        }
+        finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("join = "+ timeMs + "ms");
+        }
     }
 
     private void validateDuplicateMember(Member member) {
